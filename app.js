@@ -1,6 +1,5 @@
 // ===== QUESTION BANK =====
 const allQuestions = [
-  // CHAPTER 27 — Bacteria, Archaea & Protists
   {id:1,q:"What types of cells are smaller?",opts:["Eukaryotic","Prokaryotic","Archaea","Protists"],ans:1,ch:"Ch 27"},
   {id:2,q:"What are the 3 most common shapes of prokaryotic cells?",opts:["Spheres (cocci), Rods (bacilli), Spirals","Cubes, Rods, Filaments","Spheres, Squares, Spirals","Rods, Discs, Helices"],ans:0,ch:"Ch 27"},
   {id:3,q:"What do bacterial cell walls contain?",opts:["Chitin","Cellulose","Peptidoglycan","Keratin"],ans:2,ch:"Ch 27"},
@@ -32,9 +31,435 @@ const allQuestions = [
   {id:29,q:"What do chemoheterotrophic prokaryotes act as?",opts:["Producers","Decomposers","Parasites only","Autotrophs"],ans:1,ch:"Ch 27"},
   {id:30,q:"What is symbiosis?",opts:["Competition between two species","An ecological relationship in which two species live in close contact: a larger host and smaller symbiont","One organism killing another","A type of asexual reproduction"],ans:1,ch:"Ch 27"},
   {id:31,q:"What is mutualism?",opts:["One organism benefits, the other is harmed","Both symbiotic organisms benefit","One organism is killed","Neither organism is affected"],ans:1,ch:"Ch 27"},
-  // Protists
   {id:32,q:"Protists are _____ and mostly _____.",opts:["Prokaryotes; multicellular","Eukaryotes; unicellular","Bacteria; colonial","Archaea; filamentous"],ans:1,ch:"Ch 27"},
   {id:33,q:"What are the four supergroups of eukaryotes?",opts:["Bacteria, Archaea, Protista, Fungi","Excavata, Archaeplastida, SAR, Unikonta","Animalia, Plantae, Fungi, Protista","Cocci, Bacilli, Spirilla, Vibrio"],ans:1,ch:"Ch 27"},
+  {id:34,q:"What is endosymbiosis?",opts:["Two organisms competing for resources","When a eukaryotic cell engulfed a bacterium and kept it alive inside, becoming mitochondria or chloroplast","Bacteria exchanging DNA through pili","A type of parasitism"],ans:1,ch:"Ch 27"},
+  {id:35,q:"During secondary endosymbiosis, red and green algae were ingested by:",opts:["Prokaryotic cells","Heterotrophic eukaryotes","Other algae","Fungi"],ans:1,ch:"Ch 27"},
+  {id:36,q:"What are characteristics of dinoflagellates?",opts:["No flagella, found on land","2 flagella, found in marine and freshwater","1 flagellum, found in soil","3 flagella, found in glaciers"],ans:1,ch:"Ch 27"},
+  {id:37,q:"The apicomplexan Plasmodium causes:",opts:["Cholera","Lyme disease","Malaria","Dysentery"],ans:2,ch:"Ch 27"},
+  {id:38,q:"Rhizarians are:",opts:["Fungi","Bacteria","Amoebas","Plants"],ans:2,ch:"Ch 27"},
+  {id:39,q:"Red algae get their color from:",opts:["Chlorophyll","Carotenoids","Phycoerythrin","Xanthophyll"],ans:2,ch:"Ch 27"},
+  {id:40,q:"Entamoeba histolytica causes:",opts:["Malaria","Amebic dysentery","Lyme disease","Botulism"],ans:1,ch:"Ch 27"},
+  {id:41,q:"What do fungal cell walls contain?",opts:["Peptidoglycan","Cellulose","Chitin","Keratin"],ans:2,ch:"Ch 31"},
+  {id:42,q:"What are the most common body structures for fungi?",opts:["Multicellular filaments and single cells (yeasts)","Colonial clusters and biofilms","Spherical cocci and rods","Flagellated cells and cilia"],ans:0,ch:"Ch 31"},
+  {id:43,q:"What is mycorrhizae?",opts:["A fungal infection in animals","Mutually beneficial relationships between fungi and plant roots","A type of fungal spore","Parasitic fungi on insects"],ans:1,ch:"Ch 31"},
+  {id:44,q:"Mycorrhizal fungi colonize soils by the dispersal of haploid cells called:",opts:["Gametes","Conidia","Spores","Zygotes"],ans:2,ch:"Ch 31"},
+  {id:45,q:"What do fungi use as a sexual calling/signaling system?",opts:["Bioluminescence","Pheromones","Flagella","Fimbriae"],ans:1,ch:"Ch 31"},
+  {id:46,q:"Zygosporangia are resistant to:",opts:["Heat and UV light","Freezing and drying","Antibiotics","Acid and base"],ans:1,ch:"Ch 31"},
+  {id:47,q:"Ascomycetes reproduce asexually by enormous numbers of asexual spores called:",opts:["Basidiospores","Zoospores","Conidia","Endospores"],ans:2,ch:"Ch 31"},
+  {id:48,q:"Basidiomycetes include:",opts:["Bread molds and water molds","Mushrooms, puffballs, and shelf fungi","Only yeasts","Lichens and mosses"],ans:1,ch:"Ch 31"},
+  {id:49,q:"Fungi interact with other organisms as:",opts:["Only parasites","Only decomposers","Decomposers, mutualists, and pathogens","Only mutualists"],ans:2,ch:"Ch 31"},
+  {id:50,q:"A lichen is a symbiotic association between:",opts:["Two fungi species","A photosynthetic microorganism and a fungus","A plant and an animal","Two bacteria species"],ans:1,ch:"Ch 31"},
+  {id:51,q:"The photosynthetic component in a lichen is:",opts:["Red algae or diatoms","Mosses or ferns","Green algae or cyanobacteria","Brown algae or dinoflagellates"],ans:2,ch:"Ch 31"},
+  {id:52,q:"About 30% of known fungal species are:",opts:["Edible mushrooms","Parasites or pathogens, mostly on or in plants","Free-living marine organisms","Bioluminescent"],ans:1,ch:"Ch 31"},
+  {id:53,q:"What is mycosis?",opts:["A type of mushroom","The general term for a fungal infection in animals","A fungal reproductive structure","A mutualistic relationship"],ans:1,ch:"Ch 31"},
+  {id:54,q:"Ringworm and athlete's foot are examples of:",opts:["Bacterial infections","Viral infections","Human mycoses (fungal infections)","Parasitic worm infections"],ans:2,ch:"Ch 31"},
+  {id:55,q:"Candida albicans causes:",opts:["Malaria","Yeast infections","Lyme disease","Botulism"],ans:1,ch:"Ch 31"},
+  {id:56,q:"Fossil evidence indicates fungi formed _____ relationships with early land plants.",opts:["Parasitic","Competitive","Mutualistic","Predatory"],ans:2,ch:"Ch 31"},
+  {id:57,q:"Chytrids can act as:",opts:["Only decomposers","Only parasites","Decomposers, parasites, or mutualists","Only mutualists"],ans:2,ch:"Ch 31"},
+  {id:58,q:"The taproot develops from the primary root and prevents the plant from toppling. Lateral roots are responsible for:",opts:["Photosynthesis","Reproduction","Absorption","Gas exchange"],ans:2,ch:"Ch 35"},
+  {id:59,q:"A stem consists of _____ (where leaves attach) and _____ (segments between them).",opts:["Roots and shoots","Nodes and internodes","Xylem and phloem","Pith and cortex"],ans:1,ch:"Ch 35"},
+  {id:60,q:"In nonwoody plants, the dermal tissue system consists of:",opts:["The periderm","The cortex","The epidermis","The endodermis"],ans:2,ch:"Ch 35"},
+  {id:61,q:"A waxy coating called the _____ helps prevent water loss from the epidermis.",opts:["Periderm","Cuticle","Cortex","Lignin"],ans:1,ch:"Ch 35"},
+  {id:62,q:"In woody plants, the protective tissue that replaces the epidermis in older regions is called:",opts:["Cuticle","Cortex","Periderm","Pith"],ans:2,ch:"Ch 35"},
+  {id:63,q:"Xylem conducts:",opts:["Sugars downward","Water and dissolved minerals upward from roots","Hormones laterally","Oxygen to all cells"],ans:1,ch:"Ch 35"},
+  {id:64,q:"Phloem transports:",opts:["Water and minerals upward","Sugars from where they are made to where they are needed","Oxygen from leaves to roots","DNA between cells"],ans:1,ch:"Ch 35"},
+  {id:65,q:"Ground tissue internal to vascular tissue is _____ ; external to vascular tissue is _____.",opts:["Cortex; pith","Pith; cortex","Xylem; phloem","Epidermis; periderm"],ans:1,ch:"Ch 35"},
+  {id:66,q:"Apical meristems are located at the tips of roots and shoots and are responsible for:",opts:["Secondary growth (adding thickness)","Primary growth (elongating shoots and roots)","Producing flowers","Gas exchange"],ans:1,ch:"Ch 35"},
+  {id:67,q:"Lateral meristems add _____ to woody plants, a process called _____.",opts:["Length; primary growth","Thickness; secondary growth","Leaves; foliation","Roots; radical growth"],ans:1,ch:"Ch 35"},
+  {id:68,q:"What are the 3 zones of cells where growth occurs behind the root tip?",opts:["Zone of absorption, zone of transport, zone of storage","Zone of cell division, zone of elongation, zone of differentiation/maturation","Zone of mitosis, zone of meiosis, zone of fertilization","Zone of xylem, zone of phloem, zone of cambium"],ans:1,ch:"Ch 35"},
+  {id:69,q:"The angiosperm life cycle is characterized by the '3 Fs':",opts:["Fungi, ferns, fruits","Flowers, double fertilization, and fruits","Flagella, fimbriae, fission","Fronds, fertilization, fragmentation"],ans:1,ch:"Ch 38"},
+  {id:70,q:"What is a receptacle in a flower?",opts:["The pollen-producing structure","The part of the flower stem where all flower parts are attached","The female reproductive organ","The colorful petal"],ans:1,ch:"Ch 38"},
+  {id:71,q:"The four floral organs are:",opts:["Roots, stems, leaves, flowers","Carpels, stamens, petals, and sepals","Xylem, phloem, pith, cortex","Ovule, seed, fruit, embryo"],ans:1,ch:"Ch 38"},
+  {id:72,q:"A carpel has a long _____ with a _____ on which pollen may land.",opts:["Filament; anther","Style; stigma","Root; tip","Stem; node"],ans:1,ch:"Ch 38"},
+  {id:73,q:"A stamen consists of a filament topped by a(n) _____ with pollen sacs.",opts:["Stigma","Ovary","Anther","Sepal"],ans:2,ch:"Ch 38"},
+  {id:74,q:"In angiosperms, pollination is the transfer of pollen from:",opts:["Stigma to ovary","Anther to stigma","Root to shoot","Sepal to petal"],ans:1,ch:"Ch 38"},
+  {id:75,q:"Double fertilization ensures that endosperm only develops in ovules containing:",opts:["Pollen grains","Fertilized eggs","Spores","Nectar"],ans:1,ch:"Ch 38"},
+  {id:76,q:"After double fertilization, each ovule develops into a:",opts:["Fruit","Flower","Seed","Spore"],ans:2,ch:"Ch 38"},
+  {id:77,q:"The ovary develops into a:",opts:["Seed","Root","Fruit enclosing the seed","Leaf"],ans:2,ch:"Ch 38"},
+  {id:78,q:"Germination depends on imbibition, which is:",opts:["The release of spores","The uptake of water due to low water potential of the dry seed","Cell division in the embryo","Photosynthesis in the cotyledon"],ans:1,ch:"Ch 38"},
+  {id:79,q:"Sexual reproduction in flowering plants results in offspring that are:",opts:["Genetically identical to parents","Genetically different from their parents","Clones","Haploid only"],ans:1,ch:"Ch 38"},
+  {id:80,q:"Asexual reproduction results in:",opts:["Genetically diverse offspring","A clone of genetically identical organisms","Offspring with mutations","Hybrid organisms"],ans:1,ch:"Ch 38"},
+];
+
+// ===== STATE =====
+let questions = [];
+let answers = {};
+let flagged = {};
+let revealed = {};   // tracks which questions have been revealed
+let currentQ = 0;
+let timeLeft = 3600;
+let timerInterval = null;
+let examSubmitted = false;
+let autoAdvanceTimer = null;
+
+// ===== DOM REFS =====
+const $ = (sel) => document.querySelector(sel);
+const startScreen = $("#startScreen");
+const examScreen = $("#examScreen");
+const resultsScreen = $("#resultsScreen");
+
+// ===== UTILITIES =====
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function buildExam(pool, count) {
+  const shuffled = shuffle(pool);
+  const selected = shuffled.slice(0, count);
+  return selected.map((q) => {
+    const indices = q.opts.map((_, i) => i);
+    const shuffledIdx = shuffle(indices);
+    const newOpts = shuffledIdx.map((i) => q.opts[i]);
+    const newAns = shuffledIdx.indexOf(q.ans);
+    return { ...q, opts: newOpts, ans: newAns };
+  });
+}
+
+function formatTime(secs) {
+  const m = String(Math.floor(secs / 60)).padStart(2, "0");
+  const s = String(secs % 60).padStart(2, "0");
+  return `${m}:${s}`;
+}
+
+// ===== SCREENS =====
+function showScreen(screen) {
+  startScreen.classList.add("hidden");
+  examScreen.classList.add("hidden");
+  resultsScreen.classList.add("hidden");
+  screen.classList.remove("hidden");
+}
+
+// ===== TIMER =====
+function startTimer() {
+  clearInterval(timerInterval);
+  timerInterval = setInterval(() => {
+    timeLeft--;
+    const timerEl = $("#timer");
+    timerEl.textContent = formatTime(timeLeft);
+    if (timeLeft < 300) timerEl.classList.add("warning");
+    else timerEl.classList.remove("warning");
+    if (timeLeft <= 0) {
+      clearInterval(timerInterval);
+      submitExam();
+    }
+  }, 1000);
+}
+
+// ===== QUESTION NAV GRID =====
+function buildGrid() {
+  const grid = $("#qGrid");
+  grid.innerHTML = "";
+  questions.forEach((_, i) => {
+    const btn = document.createElement("button");
+    btn.className = "q-grid-btn";
+    btn.textContent = i + 1;
+    btn.addEventListener("click", () => {
+      clearTimeout(autoAdvanceTimer);
+      currentQ = i;
+      renderQuestion();
+    });
+    grid.appendChild(btn);
+  });
+}
+
+function updateGrid() {
+  const btns = $("#qGrid").querySelectorAll(".q-grid-btn");
+  btns.forEach((btn, i) => {
+    btn.className = "q-grid-btn";
+    if (i === currentQ) btn.classList.add("active");
+
+    if (revealed[i] !== undefined) {
+      // already answered and revealed
+      if (answers[i] === questions[i].ans) btn.classList.add("correct");
+      else btn.classList.add("wrong");
+    } else if (answers[i] !== undefined) {
+      btn.classList.add("answered");
+    }
+
+    // flag dot
+    let dot = btn.querySelector(".flag-dot");
+    if (flagged[i]) {
+      if (!dot) {
+        dot = document.createElement("span");
+        dot.className = "flag-dot";
+        dot.textContent = "🚩";
+        btn.appendChild(dot);
+      }
+    } else if (dot) {
+      dot.remove();
+    }
+  });
+
+  // submit button state
+  const btnSubmit = $("#btnSubmit");
+  const answeredCount = Object.keys(answers).length;
+  if (examSubmitted) {
+    btnSubmit.classList.add("hidden-btn");
+  } else {
+    btnSubmit.classList.remove("hidden-btn");
+    if (answeredCount === questions.length) btnSubmit.classList.add("ready");
+    else btnSubmit.classList.remove("ready");
+  }
+
+  // answered counter
+  $("#answeredCount").textContent = `${answeredCount}/${questions.length} answered`;
+}
+
+// ===== RENDER QUESTION =====
+function renderQuestion() {
+  const q = questions[currentQ];
+  const isRevealed = revealed[currentQ] !== undefined;
+  const isLocked = isRevealed || examSubmitted;
+
+  $("#qChapter").textContent = q.ch;
+  $("#qNumber").textContent = `Question ${currentQ + 1} of ${questions.length}`;
+  $("#qText").textContent = q.q;
+
+  // Show feedback banner if revealed
+  let banner = document.getElementById("feedbackBanner");
+  if (!banner) {
+    banner = document.createElement("div");
+    banner.id = "feedbackBanner";
+    const qCard = document.querySelector(".question-card");
+    qCard.insertBefore(banner, $("#optionsContainer"));
+  }
+
+  if (isRevealed) {
+    const wasCorrect = answers[currentQ] === q.ans;
+    banner.style.display = "block";
+    banner.className = wasCorrect ? "feedback-banner correct" : "feedback-banner wrong";
+    banner.textContent = wasCorrect ? "✓ Correct!" : "✗ Incorrect — see the correct answer below";
+  } else {
+    banner.style.display = "none";
+  }
+
+  const container = $("#optionsContainer");
+  container.innerHTML = "";
+  const letters = ["A", "B", "C", "D"];
+
+  q.opts.forEach((opt, oi) => {
+    const btn = document.createElement("button");
+    btn.className = "opt-btn";
+
+    const selected = answers[currentQ] === oi;
+    const isCorrectOpt = isLocked && oi === q.ans;
+    const isWrongSel = isLocked && selected && oi !== q.ans;
+
+    if (isLocked) {
+      btn.classList.add("review-mode");
+      if (isCorrectOpt) btn.classList.add("correct-opt");
+      if (isWrongSel) btn.classList.add("wrong-sel");
+    } else {
+      if (selected) btn.classList.add("selected");
+    }
+
+    const circle = document.createElement("span");
+    circle.className = "opt-circle";
+    circle.textContent = letters[oi];
+
+    const text = document.createTextNode(opt);
+
+    btn.appendChild(circle);
+    btn.appendChild(text);
+
+    if (isCorrectOpt) {
+      const ind = document.createElement("span");
+      ind.className = "opt-indicator";
+      ind.textContent = "✓";
+      btn.appendChild(ind);
+    }
+    if (isWrongSel) {
+      const ind = document.createElement("span");
+      ind.className = "opt-indicator";
+      ind.textContent = "✗";
+      btn.appendChild(ind);
+    }
+
+    if (!isLocked) {
+      btn.addEventListener("click", () => {
+        // Lock in answer and reveal immediately
+        answers[currentQ] = oi;
+        revealed[currentQ] = true;
+        renderQuestion();
+        updateGrid();
+
+        // Auto-advance to next unanswered question after 1.5s
+        clearTimeout(autoAdvanceTimer);
+        if (!examSubmitted) {
+          autoAdvanceTimer = setTimeout(() => {
+            const next = findNextUnanswered(currentQ);
+            if (next !== null) {
+              currentQ = next;
+              renderQuestion();
+            }
+          }, 1500);
+        }
+      });
+    }
+
+    container.appendChild(btn);
+  });
+
+  // Navigation buttons
+  $("#btnPrev").disabled = currentQ === 0;
+  $("#btnNext").disabled = currentQ === questions.length - 1;
+
+  // Flag button
+  const flagBtn = $("#btnFlag");
+  if (examSubmitted) {
+    flagBtn.style.display = "none";
+  } else {
+    flagBtn.style.display = "";
+    if (flagged[currentQ]) {
+      flagBtn.classList.add("flagged");
+      flagBtn.textContent = "🚩 Flagged";
+    } else {
+      flagBtn.classList.remove("flagged");
+      flagBtn.textContent = "Flag for Review";
+    }
+  }
+
+  updateGrid();
+}
+
+// Find next unanswered question after given index (wraps around)
+function findNextUnanswered(from) {
+  for (let i = from + 1; i < questions.length; i++) {
+    if (answers[i] === undefined) return i;
+  }
+  for (let i = 0; i < from; i++) {
+    if (answers[i] === undefined) return i;
+  }
+  return null; // all answered
+}
+
+// ===== SUBMIT =====
+function submitExam() {
+  clearInterval(timerInterval);
+  clearTimeout(autoAdvanceTimer);
+  examSubmitted = true;
+  // Mark all as revealed
+  questions.forEach((_, i) => { revealed[i] = true; });
+  showResultsScreen();
+}
+
+function showResultsScreen() {
+  const score = questions.reduce((s, q, i) => s + (answers[i] === q.ans ? 1 : 0), 0);
+  const pct = Math.round((score / questions.length) * 100);
+  const passed = pct >= 70;
+
+  $("#resultsEmoji").textContent = passed ? "🎉" : "📚";
+  $("#resultsHeading").textContent = passed ? "Great Job!" : "Keep Studying!";
+  $("#resultsSubtext").textContent = passed ? "You're on track for this exam." : "Review the missed topics below.";
+  const pctEl = $("#resultsPct");
+  pctEl.textContent = `${pct}%`;
+  pctEl.className = `results-pct ${passed ? "pass" : "fail"}`;
+  $("#resultsDetail").textContent = `${score} / ${questions.length} correct`;
+
+  // Chapter breakdown
+  const chScores = {};
+  questions.forEach((q, i) => {
+    if (!chScores[q.ch]) chScores[q.ch] = { t: 0, c: 0 };
+    chScores[q.ch].t++;
+    if (answers[i] === q.ans) chScores[q.ch].c++;
+  });
+
+  const breakdownEl = $("#chapterBreakdown");
+  breakdownEl.innerHTML = "";
+  Object.keys(chScores).sort().forEach((ch) => {
+    const { t, c } = chScores[ch];
+    const p = Math.round((c / t) * 100);
+    const colorClass = p >= 70 ? "green" : p >= 50 ? "yellow" : "red";
+    breakdownEl.innerHTML += `
+      <div class="ch-row">
+        <div class="ch-row-header"><span>${ch}</span><span>${c}/${t} (${p}%)</span></div>
+        <div class="ch-bar-bg"><div class="ch-bar-fill ${colorClass}" style="width:${p}%"></div></div>
+      </div>`;
+  });
+
+  // Missed questions
+  const missed = questions.map((q, i) => ({ q, i })).filter(({ q, i }) => answers[i] !== q.ans);
+  $("#missedTitle").textContent = `Missed Questions (${missed.length})`;
+  const missedList = $("#missedList");
+  missedList.innerHTML = "";
+
+  if (missed.length === 0) {
+    $("#missedSection").classList.add("hidden");
+  } else {
+    $("#missedSection").classList.remove("hidden");
+    missed.forEach(({ q, i }) => {
+      const yourAnswer = answers[i] !== undefined ? q.opts[answers[i]] : "No answer";
+      missedList.innerHTML += `
+        <div class="missed-item">
+          <p class="missed-q"><strong>Q${i + 1}:</strong> ${q.q}</p>
+          <p class="missed-yours">Your answer: ${yourAnswer}</p>
+          <p class="missed-correct">Correct: ${q.opts[q.ans]}</p>
+        </div>`;
+    });
+  }
+
+  showScreen(resultsScreen);
+}
+
+// ===== START EXAM =====
+function startExam() {
+  questions = buildExam(allQuestions, 50);
+  answers = {};
+  flagged = {};
+  revealed = {};
+  currentQ = 0;
+  examSubmitted = false;
+  timeLeft = 3600;
+  clearTimeout(autoAdvanceTimer);
+
+  showScreen(examScreen);
+  buildGrid();
+  renderQuestion();
+  startTimer();
+  $("#timer").textContent = formatTime(timeLeft);
+  $("#timer").classList.remove("warning");
+}
+
+// ===== EVENT LISTENERS =====
+$("#btnStart").addEventListener("click", startExam);
+
+$("#btnPrev").addEventListener("click", () => {
+  clearTimeout(autoAdvanceTimer);
+  if (currentQ > 0) { currentQ--; renderQuestion(); }
+});
+
+$("#btnNext").addEventListener("click", () => {
+  clearTimeout(autoAdvanceTimer);
+  if (currentQ < questions.length - 1) { currentQ++; renderQuestion(); }
+});
+
+$("#btnFlag").addEventListener("click", () => {
+  flagged[currentQ] = !flagged[currentQ];
+  renderQuestion();
+});
+
+$("#btnSubmit").addEventListener("click", () => {
+  const unanswered = questions.length - Object.keys(answers).length;
+  if (unanswered > 0) {
+    if (!confirm(`You have ${unanswered} unanswered question(s). Submit anyway?`)) return;
+  }
+  submitExam();
+});
+
+$("#btnReview").addEventListener("click", () => {
+  currentQ = 0;
+  showScreen(examScreen);
+  $("#btnSubmit").classList.add("hidden-btn");
+  renderQuestion();
+});
+
+$("#btnRetake").addEventListener("click", startExam);  {id:33,q:"What are the four supergroups of eukaryotes?",opts:["Bacteria, Archaea, Protista, Fungi","Excavata, Archaeplastida, SAR, Unikonta","Animalia, Plantae, Fungi, Protista","Cocci, Bacilli, Spirilla, Vibrio"],ans:1,ch:"Ch 27"},
   {id:34,q:"What is endosymbiosis?",opts:["Two organisms competing for resources","When a eukaryotic cell engulfed a bacterium and kept it alive inside, becoming mitochondria or chloroplast","Bacteria exchanging DNA through pili","A type of parasitism"],ans:1,ch:"Ch 27"},
   {id:35,q:"During secondary endosymbiosis, red and green algae were ingested by:",opts:["Prokaryotic cells","Heterotrophic eukaryotes","Other algae","Fungi"],ans:1,ch:"Ch 27"},
   {id:36,q:"What are characteristics of dinoflagellates?",opts:["No flagella, found on land","2 flagella, found in marine and freshwater","1 flagellum, found in soil","3 flagella, found in glaciers"],ans:1,ch:"Ch 27"},
