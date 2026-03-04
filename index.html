@@ -1,1 +1,357 @@
+import { useState, useEffect, useCallback } from "react";
 
+const allQuestions = [
+  // CHAPTER 27 - Bacteria & Archaea
+  {id:1, q:"What types of cells are smaller?", opts:["Eukaryotic","Prokaryotic","Archaea","Protists"], ans:1, ch:"Ch 27"},
+  {id:2, q:"What are the 3 most common shapes of prokaryotic cells?", opts:["Spheres (cocci), Rods (bacilli), Spirals","Cubes, Rods, Filaments","Spheres, Squares, Spirals","Rods, Discs, Helices"], ans:0, ch:"Ch 27"},
+  {id:3, q:"What do bacterial cell walls contain?", opts:["Chitin","Cellulose","Peptidoglycan","Keratin"], ans:2, ch:"Ch 27"},
+  {id:4, q:"What is peptidoglycan?", opts:["A lipid bilayer surrounding the cell","A network of sugar polymers cross-linked by polypeptides","A protein coat on the outer membrane","A chain of amino acids forming the capsule"], ans:1, ch:"Ch 27"},
+  {id:5, q:"What do Archaea contain and what do they lack?", opts:["They contain peptidoglycan but lack polysaccharides","They contain cellulose but lack protein","They contain polysaccharides and protein but lack peptidoglycan","They contain chitin but lack lipids"], ans:2, ch:"Ch 27"},
+  {id:6, q:"Gram-positive bacteria have _____ peptidoglycan and appear _____ in color.", opts:["Less; pink","Large amounts of; purple","Large amounts of; pink","Less; purple"], ans:1, ch:"Ch 27"},
+  {id:7, q:"Why are Gram-negative bacteria more antibiotic resistant?", opts:["They have thicker peptidoglycan walls","They have an outer phospholipid membrane that blocks antibiotics","They reproduce faster than Gram-positive","They lack a cell wall entirely"], ans:1, ch:"Ch 27"},
+  {id:8, q:"What do antibiotics target in bacterial cells?", opts:["The nucleus","Ribosomes only","Peptidoglycan, damaging bacterial cell walls","The plasma membrane lipids"], ans:2, ch:"Ch 27"},
+  {id:9, q:"What is a capsule in prokaryotes?", opts:["A rigid cell wall made of chitin","A polysaccharide or protein layer that covers many prokaryotes","The inner membrane of the cell","A DNA-containing region"], ans:1, ch:"Ch 27"},
+  {id:10, q:"What are fimbriae?", opts:["Long hairlike structures for DNA exchange","Whip-like tails for movement","Short hairlike structures that allow prokaryotes to stick to surfaces","Protein coats surrounding the cell"], ans:2, ch:"Ch 27"},
+  {id:11, q:"What are pili?", opts:["Short structures for surface attachment","Hairlike structures longer than fimbriae that allow prokaryotes to exchange DNA","Flagella components for movement","Capsule proteins"], ans:1, ch:"Ch 27"},
+  {id:12, q:"What are the three components of bacterial flagella?", opts:["Head, tail, sheath","Motor, hook, and filament","Base, stem, tip","Anchor, rod, whip"], ans:1, ch:"Ch 27"},
+  {id:13, q:"A prokaryotic genome has _____ DNA than a eukaryotic genome.", opts:["More","The same amount of","Less","No"], ans:2, ch:"Ch 27"},
+  {id:14, q:"How do prokaryotes reproduce?", opts:["Mitosis","Meiosis","Binary fission","Budding"], ans:2, ch:"Ch 27"},
+  {id:15, q:"How often can binary fission occur?", opts:["Every 6-12 hours","Every 1-3 hours","Every 24 hours","Once a week"], ans:1, ch:"Ch 27"},
+  {id:16, q:"What 3 factors contribute to prokaryotic genetic diversity?", opts:["Mitosis, meiosis, crossing over","Rapid reproduction, mutation, genetic recombination","Binary fission, budding, fragmentation","Transformation, translation, transcription"], ans:1, ch:"Ch 27"},
+  {id:17, q:"What is transformation in prokaryotes?", opts:["Movement of genes between bacteria by bacteriophages","Genetic material transferred between prokaryotic cells directly","A prokaryotic cell takes up and incorporates foreign DNA from the surrounding environment","Changing the shape of a bacterial cell"], ans:2, ch:"Ch 27"},
+  {id:18, q:"What is transduction?", opts:["Direct transfer of DNA between cells","The movement of genes between bacteria by bacteriophages","Uptake of foreign DNA from the environment","RNA to protein conversion"], ans:1, ch:"Ch 27"},
+  {id:19, q:"What is the process of conjugation?", opts:["A cell takes up DNA from the environment","Genetic material is transferred between prokaryotic cells","Phages inject DNA into bacteria","Bacteria divide by binary fission"], ans:1, ch:"Ch 27"},
+  {id:20, q:"Where does Escherichia coli reside, and is it normally pathogenic?", opts:["In the lungs; yes it is pathogenic","In the intestines of many mammals; not normally pathogenic","In the bloodstream; highly pathogenic","On the skin; mildly pathogenic"], ans:1, ch:"Ch 27"},
+  {id:21, q:"Campylobacter causes:", opts:["Stomach ulcers","Lyme disease","Blood poisoning / stomach poisoning","Syphilis"], ans:2, ch:"Ch 27"},
+  {id:22, q:"Helicobacter pylori causes:", opts:["Stomach ulcers","Blindness","Lyme disease","Botulism"], ans:0, ch:"Ch 27"},
+  {id:23, q:"What are Chlamydias?", opts:["Free-living marine bacteria","Bacteria parasites that live within animal cells","Archaea found in extreme environments","Fungi that infect plants"], ans:1, ch:"Ch 27"},
+  {id:24, q:"Chlamydia trachomatis causes:", opts:["Malaria and liver damage","Lyme disease and Bell's palsy","Blindness and nongonococcal urethritis (sexually transmitted)","Botulism and food poisoning"], ans:2, ch:"Ch 27"},
+  {id:25, q:"Treponema pallidum causes _____ and Borrelia burgdorferi causes _____.", opts:["Lyme disease; syphilis","Syphilis; Lyme disease","Malaria; cholera","Cholera; tuberculosis"], ans:1, ch:"Ch 27"},
+  {id:26, q:"Lyme disease can potentially cause:", opts:["Blindness","Bell's palsy","Stomach ulcers","Botulism"], ans:1, ch:"Ch 27"},
+  {id:27, q:"Clostridium botulinum causes:", opts:["Syphilis","Lyme disease","Botulism (associated with canned food)","Walking pneumonia"], ans:2, ch:"Ch 27"},
+  {id:28, q:"What are the smallest known cells?", opts:["E. coli","Chlamydia","Archaea","Mycoplasms"], ans:3, ch:"Ch 27"},
+  {id:29, q:"What do chemoheterotrophic prokaryotes act as?", opts:["Producers","Decomposers","Parasites only","Autotrophs"], ans:1, ch:"Ch 27"},
+  {id:30, q:"What is symbiosis?", opts:["Competition between two species","An ecological relationship in which two species live in close contact: a larger host and smaller symbiont","One organism killing another","A type of asexual reproduction"], ans:1, ch:"Ch 27"},
+  {id:31, q:"What is mutualism?", opts:["One organism benefits, the other is harmed","Both symbiotic organisms benefit","One organism is killed","Neither organism is affected"], ans:1, ch:"Ch 27"},
+  // PROTISTS
+  {id:32, q:"Protists are _____ and mostly _____.", opts:["Prokaryotes; multicellular","Eukaryotes; unicellular","Bacteria; colonial","Archaea; filamentous"], ans:1, ch:"Ch 27"},
+  {id:33, q:"What are the four supergroups of eukaryotes?", opts:["Bacteria, Archaea, Protista, Fungi","Excavata, Archaeplastida, SAR, Unikonta","Animalia, Plantae, Fungi, Protista","Cocci, Bacilli, Spirilla, Vibrio"], ans:1, ch:"Ch 27"},
+  {id:34, q:"What is endosymbiosis?", opts:["Two organisms competing for resources","When a eukaryotic cell engulfed a bacterium and kept it alive inside, becoming mitochondria or chloroplast","Bacteria exchanging DNA through pili","A type of parasitism"], ans:1, ch:"Ch 27"},
+  {id:35, q:"During secondary endosymbiosis, red and green algae were ingested by:", opts:["Prokaryotic cells","Heterotrophic eukaryotes","Other algae","Fungi"], ans:1, ch:"Ch 27"},
+  {id:36, q:"What are characteristics of dinoflagellates?", opts:["No flagella, found on land","2 flagella, found in marine and freshwater","1 flagellum, found in soil","3 flagella, found in glaciers"], ans:1, ch:"Ch 27"},
+  {id:37, q:"The apicomplexan Plasmodium causes:", opts:["Cholera","Lyme disease","Malaria","Dysentery"], ans:2, ch:"Ch 27"},
+  {id:38, q:"Rhizarians are:", opts:["Fungi","Bacteria","Amoebas","Plants"], ans:2, ch:"Ch 27"},
+  {id:39, q:"Red algae get their color from:", opts:["Chlorophyll","Carotenoids","Phycoerythrin","Xanthophyll"], ans:2, ch:"Ch 27"},
+  {id:40, q:"Entamoeba histolytica causes:", opts:["Malaria","Amebic dysentery","Lyme disease","Botulism"], ans:1, ch:"Ch 27"},
+  // CHAPTER 31 - Fungi
+  {id:41, q:"What do fungal cell walls contain?", opts:["Peptidoglycan","Cellulose","Chitin","Keratin"], ans:2, ch:"Ch 31"},
+  {id:42, q:"What are the most common body structures for fungi?", opts:["Multicellular filaments and single cells (yeasts)","Colonial clusters and biofilms","Spherical cocci and rods","Flagellated cells and cilia"], ans:0, ch:"Ch 31"},
+  {id:43, q:"What is mycorrhizae?", opts:["A fungal infection in animals","Mutually beneficial relationships between fungi and plant roots","A type of fungal spore","Parasitic fungi on insects"], ans:1, ch:"Ch 31"},
+  {id:44, q:"Mycorrhizal fungi colonize soils by the dispersal of haploid cells called:", opts:["Gametes","Conidia","Spores","Zygotes"], ans:2, ch:"Ch 31"},
+  {id:45, q:"What do fungi use as a sexual calling/signaling system?", opts:["Bioluminescence","Pheromones","Flagella","Fimbriae"], ans:1, ch:"Ch 31"},
+  {id:46, q:"Zygosporangia are resistant to:", opts:["Heat and UV light","Freezing and drying","Antibiotics","Acid and base"], ans:1, ch:"Ch 31"},
+  {id:47, q:"Ascomycetes reproduce asexually by enormous numbers of asexual spores called:", opts:["Basidiospores","Zoospores","Conidia","Endospores"], ans:2, ch:"Ch 31"},
+  {id:48, q:"Basidiomycetes include:", opts:["Bread molds and water molds","Mushrooms, puffballs, and shelf fungi","Only yeasts","Lichens and mosses"], ans:1, ch:"Ch 31"},
+  {id:49, q:"Fungi interact with other organisms as:", opts:["Only parasites","Only decomposers","Decomposers, mutualists, and pathogens","Only mutualists"], ans:2, ch:"Ch 31"},
+  {id:50, q:"A lichen is a symbiotic association between:", opts:["Two fungi species","A photosynthetic microorganism and a fungus","A plant and an animal","Two bacteria species"], ans:1, ch:"Ch 31"},
+  {id:51, q:"The photosynthetic component in a lichen is:", opts:["Red algae or diatoms","Mosses or ferns","Green algae or cyanobacteria","Brown algae or dinoflagellates"], ans:2, ch:"Ch 31"},
+  {id:52, q:"About 30% of known fungal species are:", opts:["Edible mushrooms","Parasites or pathogens, mostly on or in plants","Free-living marine organisms","Bioluminescent"], ans:1, ch:"Ch 31"},
+  {id:53, q:"What is mycosis?", opts:["A type of mushroom","The general term for a fungal infection in animals","A fungal reproductive structure","A mutualistic relationship"], ans:1, ch:"Ch 31"},
+  {id:54, q:"Ringworm and athlete's foot are examples of:", opts:["Bacterial infections","Viral infections","Human mycoses (fungal infections)","Parasitic worm infections"], ans:2, ch:"Ch 31"},
+  {id:55, q:"Candida albicans causes:", opts:["Malaria","Yeast infections","Lyme disease","Botulism"], ans:1, ch:"Ch 31"},
+  {id:56, q:"Fossil evidence indicates fungi formed _____ relationships with early land plants.", opts:["Parasitic","Competitive","Mutualistic","Predatory"], ans:2, ch:"Ch 31"},
+  {id:57, q:"Chytrids can act as:", opts:["Only decomposers","Only parasites","Decomposers, parasites, or mutualists","Only mutualists"], ans:2, ch:"Ch 31"},
+  // CHAPTER 35 - Plant Structure
+  {id:58, q:"The taproot develops from the primary root and prevents the plant from toppling. Lateral roots are responsible for:", opts:["Photosynthesis","Reproduction","Absorption","Gas exchange"], ans:2, ch:"Ch 35"},
+  {id:59, q:"A stem consists of _____ (where leaves attach) and _____ (segments between them).", opts:["Roots and shoots","Nodes and internodes","Xylem and phloem","Pith and cortex"], ans:1, ch:"Ch 35"},
+  {id:60, q:"In nonwoody plants, the dermal tissue system consists of:", opts:["The periderm","The cortex","The epidermis","The endodermis"], ans:2, ch:"Ch 35"},
+  {id:61, q:"A waxy coating called the _____ helps prevent water loss from the epidermis.", opts:["Periderm","Cuticle","Cortex","Lignin"], ans:1, ch:"Ch 35"},
+  {id:62, q:"In woody plants, the protective tissue that replaces the epidermis in older regions is called:", opts:["Cuticle","Cortex","Periderm","Pith"], ans:2, ch:"Ch 35"},
+  {id:63, q:"Xylem conducts:", opts:["Sugars downward","Water and dissolved minerals upward from roots","Hormones laterally","Oxygen to all cells"], ans:1, ch:"Ch 35"},
+  {id:64, q:"Phloem transports:", opts:["Water and minerals upward","Sugars from where they are made to where they are needed","Oxygen from leaves to roots","DNA between cells"], ans:1, ch:"Ch 35"},
+  {id:65, q:"Ground tissue internal to vascular tissue is _____ ; external to vascular tissue is _____.", opts:["Cortex; pith","Pith; cortex","Xylem; phloem","Epidermis; periderm"], ans:1, ch:"Ch 35"},
+  {id:66, q:"Apical meristems are located at the tips of roots and shoots and are responsible for:", opts:["Secondary growth (adding thickness)","Primary growth (elongating shoots and roots)","Producing flowers","Gas exchange"], ans:1, ch:"Ch 35"},
+  {id:67, q:"Lateral meristems add _____ to woody plants, a process called _____.", opts:["Length; primary growth","Thickness; secondary growth","Leaves; foliation","Roots; radical growth"], ans:1, ch:"Ch 35"},
+  {id:68, q:"What are the 3 zones of cells where growth occurs behind the root tip?", opts:["Zone of absorption, zone of transport, zone of storage","Zone of cell division, zone of elongation, zone of differentiation/maturation","Zone of mitosis, zone of meiosis, zone of fertilization","Zone of xylem, zone of phloem, zone of cambium"], ans:1, ch:"Ch 35"},
+  // CHAPTER 38 - Angiosperms
+  {id:69, q:"The angiosperm life cycle is characterized by the '3 Fs':", opts:["Fungi, ferns, fruits","Flowers, double fertilization, and fruits","Flagella, fimbriae, fission","Fronds, fertilization, fragmentation"], ans:1, ch:"Ch 38"},
+  {id:70, q:"What is a receptacle in a flower?", opts:["The pollen-producing structure","The part of the flower stem where all flower parts are attached","The female reproductive organ","The colorful petal"], ans:1, ch:"Ch 38"},
+  {id:71, q:"The four floral organs are:", opts:["Roots, stems, leaves, flowers","Carpels, stamens, petals, and sepals","Xylem, phloem, pith, cortex","Ovule, seed, fruit, embryo"], ans:1, ch:"Ch 38"},
+  {id:72, q:"A carpel has a long _____ with a _____ on which pollen may land.", opts:["Filament; anther","Style; stigma","Root; tip","Stem; node"], ans:1, ch:"Ch 38"},
+  {id:73, q:"A stamen consists of a filament topped by a(n) _____ with pollen sacs.", opts:["Stigma","Ovary","Anther","Sepal"], ans:2, ch:"Ch 38"},
+  {id:74, q:"In angiosperms, pollination is the transfer of pollen from:", opts:["Stigma to ovary","Anther to stigma","Root to shoot","Sepal to petal"], ans:1, ch:"Ch 38"},
+  {id:75, q:"Double fertilization ensures that endosperm only develops in ovules containing:", opts:["Pollen grains","Fertilized eggs","Spores","Nectar"], ans:1, ch:"Ch 38"},
+  {id:76, q:"After double fertilization, each ovule develops into a:", opts:["Fruit","Flower","Seed","Spore"], ans:2, ch:"Ch 38"},
+  {id:77, q:"The ovary develops into a:", opts:["Seed","Root","Fruit enclosing the seed","Leaf"], ans:2, ch:"Ch 38"},
+  {id:78, q:"Germination depends on imbibition, which is:", opts:["The release of spores","The uptake of water due to low water potential of the dry seed","Cell division in the embryo","Photosynthesis in the cotyledon"], ans:1, ch:"Ch 38"},
+  {id:79, q:"Sexual reproduction in flowering plants results in offspring that are:", opts:["Genetically identical to parents","Genetically different from their parents","Clones","Haploid only"], ans:1, ch:"Ch 38"},
+  {id:80, q:"Asexual reproduction results in:", opts:["Genetically diverse offspring","A clone of genetically identical organisms","Offspring with mutations","Hybrid organisms"], ans:1, ch:"Ch 38"},
+];
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function buildExam(pool, count) {
+  const shuffled = shuffle(pool);
+  const selected = shuffled.slice(0, count);
+  return selected.map(q => {
+    const indices = q.opts.map((_, i) => i);
+    const shuffledIdx = shuffle(indices);
+    const newOpts = shuffledIdx.map(i => q.opts[i]);
+    const newAns = shuffledIdx.indexOf(q.ans);
+    return { ...q, opts: newOpts, ans: newAns };
+  });
+}
+
+export default function Bio2Exam() {
+  const [phase, setPhase] = useState("start");
+  const [questions, setQuestions] = useState([]);
+  const [answers, setAnswers] = useState({});
+  const [flagged, setFlagged] = useState({});
+  const [currentQ, setCurrentQ] = useState(0);
+  const [showResults, setShowResults] = useState(false);
+  const [reviewMode, setReviewMode] = useState(false);
+  const [timeLeft, setTimeLeft] = useState(60 * 60);
+  const [timerActive, setTimerActive] = useState(false);
+
+  const startExam = useCallback(() => {
+    const exam = buildExam(allQuestions, 50);
+    setQuestions(exam);
+    setAnswers({});
+    setFlagged({});
+    setCurrentQ(0);
+    setShowResults(false);
+    setReviewMode(false);
+    setTimeLeft(60 * 60);
+    setTimerActive(true);
+    setPhase("exam");
+  }, []);
+
+  useEffect(() => {
+    if (!timerActive || timeLeft <= 0) return;
+    const t = setInterval(() => setTimeLeft(p => {
+      if (p <= 1) { setTimerActive(false); return 0; }
+      return p - 1;
+    }), 1000);
+    return () => clearInterval(t);
+  }, [timerActive, timeLeft]);
+
+  const selectAnswer = (qIdx, optIdx) => {
+    if (showResults) return;
+    setAnswers(p => ({ ...p, [qIdx]: optIdx }));
+  };
+
+  const toggleFlag = (qIdx) => {
+    setFlagged(p => ({ ...p, [qIdx]: !p[qIdx] }));
+  };
+
+  const submitExam = () => {
+    setTimerActive(false);
+    setShowResults(true);
+    setCurrentQ(0);
+  };
+
+  const score = questions.reduce((s, q, i) => s + (answers[i] === q.ans ? 1 : 0), 0);
+  const pct = questions.length ? Math.round((score / questions.length) * 100) : 0;
+  const mm = String(Math.floor(timeLeft / 60)).padStart(2, "0");
+  const ss = String(timeLeft % 60).padStart(2, "0");
+  const answered = Object.keys(answers).length;
+
+  if (phase === "start") {
+    return (
+      <div style={{ minHeight: "100vh", background: "linear-gradient(135deg, #0f172a 0%, #1e293b 100%)", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "system-ui, -apple-system, sans-serif" }}>
+        <div style={{ background: "#1e293b", border: "1px solid #334155", borderRadius: 16, padding: "48px 40px", maxWidth: 520, width: "100%", textAlign: "center" }}>
+          <div style={{ fontSize: 48, marginBottom: 8 }}>🧬</div>
+          <h1 style={{ color: "#f1f5f9", fontSize: 28, margin: "0 0 8px" }}>Biology 2 — Test 1</h1>
+          <p style={{ color: "#94a3b8", fontSize: 14, margin: "0 0 4px" }}>Dr. Arthur Babayon • March 10th Exam Prep</p>
+          <p style={{ color: "#64748b", fontSize: 13, margin: "0 0 32px" }}>Chapters 27, 31, 35 & 38</p>
+          <div style={{ display: "flex", justifyContent: "center", gap: 32, marginBottom: 32 }}>
+            {[["50","Questions"],["60","Minutes"],["4","Chapters"]].map(([n,l],i) => (
+              <div key={i} style={{ textAlign: "center" }}>
+                <div style={{ color: "#38bdf8", fontSize: 28, fontWeight: 700 }}>{n}</div>
+                <div style={{ color: "#94a3b8", fontSize: 12 }}>{l}</div>
+              </div>
+            ))}
+          </div>
+          <button onClick={startExam} style={{ background: "linear-gradient(135deg, #2563eb, #7c3aed)", color: "#fff", border: "none", borderRadius: 10, padding: "14px 48px", fontSize: 16, fontWeight: 600, cursor: "pointer", transition: "transform 0.15s", width: "100%" }}
+            onMouseOver={e => e.currentTarget.style.transform = "scale(1.03)"}
+            onMouseOut={e => e.currentTarget.style.transform = "scale(1)"}>
+            Begin Exam
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  if (showResults && !reviewMode) {
+    const missed = questions.map((q, i) => ({ q, i })).filter(({ q, i }) => answers[i] !== q.ans);
+    const chScores = {};
+    questions.forEach((q, i) => {
+      if (!chScores[q.ch]) chScores[q.ch] = { t: 0, c: 0 };
+      chScores[q.ch].t++;
+      if (answers[i] === q.ans) chScores[q.ch].c++;
+    });
+    const passed = pct >= 70;
+    return (
+      <div style={{ minHeight: "100vh", background: "linear-gradient(135deg, #0f172a 0%, #1e293b 100%)", fontFamily: "system-ui, -apple-system, sans-serif", padding: 24 }}>
+        <div style={{ maxWidth: 600, margin: "0 auto" }}>
+          <div style={{ background: "#1e293b", border: "1px solid #334155", borderRadius: 16, padding: 32, textAlign: "center", marginBottom: 20 }}>
+            <div style={{ fontSize: 56, marginBottom: 8 }}>{passed ? "🎉" : "📚"}</div>
+            <h2 style={{ color: "#f1f5f9", fontSize: 24, margin: "0 0 4px" }}>{passed ? "Great Job!" : "Keep Studying!"}</h2>
+            <p style={{ color: "#94a3b8", fontSize: 14, margin: "0 0 24px" }}>{passed ? "You're on track for this exam." : "Review the missed topics below."}</p>
+            <div style={{ fontSize: 56, fontWeight: 800, color: passed ? "#22c55e" : "#f59e0b", marginBottom: 4 }}>{pct}%</div>
+            <p style={{ color: "#94a3b8", fontSize: 14, margin: 0 }}>{score} / {questions.length} correct</p>
+          </div>
+          <div style={{ background: "#1e293b", border: "1px solid #334155", borderRadius: 12, padding: 20, marginBottom: 20 }}>
+            <h3 style={{ color: "#f1f5f9", fontSize: 15, margin: "0 0 12px" }}>Breakdown by Chapter</h3>
+            {Object.entries(chScores).sort().map(([ch, { t, c }]) => {
+              const p = Math.round((c / t) * 100);
+              return (
+                <div key={ch} style={{ marginBottom: 10 }}>
+                  <div style={{ display: "flex", justifyContent: "space-between", color: "#cbd5e1", fontSize: 13, marginBottom: 4 }}>
+                    <span>{ch}</span><span>{c}/{t} ({p}%)</span>
+                  </div>
+                  <div style={{ background: "#334155", borderRadius: 6, height: 8, overflow: "hidden" }}>
+                    <div style={{ width: `${p}%`, height: "100%", background: p >= 70 ? "#22c55e" : p >= 50 ? "#f59e0b" : "#ef4444", borderRadius: 6, transition: "width 0.5s" }} />
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+          {missed.length > 0 && (
+            <div style={{ background: "#1e293b", border: "1px solid #334155", borderRadius: 12, padding: 20, marginBottom: 20 }}>
+              <h3 style={{ color: "#f1f5f9", fontSize: 15, margin: "0 0 12px" }}>Missed Questions ({missed.length})</h3>
+              {missed.map(({ q, i }) => (
+                <div key={i} style={{ borderBottom: "1px solid #334155", paddingBottom: 12, marginBottom: 12 }}>
+                  <p style={{ color: "#e2e8f0", fontSize: 13, margin: "0 0 6px" }}><strong>Q{i + 1}:</strong> {q.q}</p>
+                  <p style={{ color: "#ef4444", fontSize: 12, margin: "0 0 2px" }}>Your answer: {answers[i] !== undefined ? q.opts[answers[i]] : "No answer"}</p>
+                  <p style={{ color: "#22c55e", fontSize: 12, margin: 0 }}>Correct: {q.opts[q.ans]}</p>
+                </div>
+              ))}
+            </div>
+          )}
+          <div style={{ display: "flex", gap: 12 }}>
+            <button onClick={() => setReviewMode(true)} style={{ flex: 1, background: "#334155", color: "#f1f5f9", border: "none", borderRadius: 10, padding: "12px 0", fontSize: 14, fontWeight: 600, cursor: "pointer" }}>Review All</button>
+            <button onClick={() => { setPhase("start"); }} style={{ flex: 1, background: "linear-gradient(135deg, #2563eb, #7c3aed)", color: "#fff", border: "none", borderRadius: 10, padding: "12px 0", fontSize: 14, fontWeight: 600, cursor: "pointer" }}>Retake Exam</button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  const q = questions[currentQ];
+  if (!q) return null;
+
+  return (
+    <div style={{ minHeight: "100vh", background: "linear-gradient(135deg, #0f172a 0%, #1e293b 100%)", fontFamily: "system-ui, -apple-system, sans-serif", display: "flex", flexDirection: "column" }}>
+      {/* Header */}
+      <div style={{ background: "#1e293b", borderBottom: "1px solid #334155", padding: "10px 20px", display: "flex", alignItems: "center", justifyContent: "space-between", position: "sticky", top: 0, zIndex: 10 }}>
+        <div style={{ color: "#f1f5f9", fontSize: 14, fontWeight: 600 }}>Bio 2 — Test 1</div>
+        <div style={{ color: timeLeft < 300 ? "#ef4444" : "#38bdf8", fontSize: 16, fontWeight: 700, fontVariantNumeric: "tabular-nums" }}>{mm}:{ss}</div>
+        <div style={{ color: "#94a3b8", fontSize: 13 }}>{answered}/50 answered</div>
+      </div>
+      <div style={{ flex: 1, display: "flex", maxWidth: 900, width: "100%", margin: "0 auto", padding: "16px 12px", gap: 12 }}>
+        {/* Question nav */}
+        <div style={{ width: 200, flexShrink: 0, background: "#1e293b", border: "1px solid #334155", borderRadius: 12, padding: 12, height: "fit-content", position: "sticky", top: 68, overflowY: "auto", maxHeight: "calc(100vh - 100px)" }}>
+          <div style={{ color: "#94a3b8", fontSize: 11, marginBottom: 8, fontWeight: 600 }}>QUESTIONS</div>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: 4 }}>
+            {questions.map((_, i) => {
+              const isActive = i === currentQ;
+              const isAnswered = answers[i] !== undefined;
+              const isFlagged = flagged[i];
+              const isCorrect = showResults && answers[i] === questions[i].ans;
+              const isWrong = showResults && answers[i] !== undefined && answers[i] !== questions[i].ans;
+              let bg = "#334155";
+              if (showResults) {
+                bg = isCorrect ? "#166534" : isWrong ? "#991b1b" : "#334155";
+              } else if (isAnswered) bg = "#1d4ed8";
+              return (
+                <button key={i} onClick={() => setCurrentQ(i)} style={{
+                  width: 32, height: 32, borderRadius: 6, border: isActive ? "2px solid #38bdf8" : "1px solid transparent",
+                  background: bg, color: "#f1f5f9", fontSize: 11, fontWeight: 600, cursor: "pointer", position: "relative", display: "flex", alignItems: "center", justifyContent: "center"
+                }}>
+                  {i + 1}
+                  {isFlagged && <span style={{ position: "absolute", top: -2, right: -2, fontSize: 8 }}>🚩</span>}
+                </button>
+              );
+            })}
+          </div>
+          {!showResults && (
+            <button onClick={submitExam} style={{ width: "100%", marginTop: 12, background: answered === 50 ? "#22c55e" : "#f59e0b", color: "#0f172a", border: "none", borderRadius: 8, padding: "10px 0", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>
+              Submit Exam
+            </button>
+          )}
+          {showResults && (
+            <button onClick={() => { setReviewMode(false); }} style={{ width: "100%", marginTop: 12, background: "#334155", color: "#f1f5f9", border: "none", borderRadius: 8, padding: "10px 0", fontSize: 13, fontWeight: 600, cursor: "pointer" }}>
+              Back to Results
+            </button>
+          )}
+        </div>
+        {/* Main question area */}
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <div style={{ background: "#1e293b", border: "1px solid #334155", borderRadius: 12, padding: 24 }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
+              <span style={{ color: "#38bdf8", fontSize: 12, fontWeight: 600, background: "#1e3a5f", padding: "4px 10px", borderRadius: 20 }}>{q.ch}</span>
+              <span style={{ color: "#94a3b8", fontSize: 13 }}>Question {currentQ + 1} of {questions.length}</span>
+            </div>
+            <h2 style={{ color: "#f1f5f9", fontSize: 18, fontWeight: 600, margin: "0 0 20px", lineHeight: 1.5 }}>{q.q}</h2>
+            <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+              {q.opts.map((opt, oi) => {
+                const selected = answers[currentQ] === oi;
+                const isCorrectOpt = showResults && oi === q.ans;
+                const isWrongSel = showResults && selected && oi !== q.ans;
+                let bg = selected && !showResults ? "#1d4ed8" : "#0f172a";
+                let border = selected && !showResults ? "#3b82f6" : "#334155";
+                if (isCorrectOpt) { bg = "#14532d"; border = "#22c55e"; }
+                if (isWrongSel) { bg = "#7f1d1d"; border = "#ef4444"; }
+                return (
+                  <button key={oi} onClick={() => selectAnswer(currentQ, oi)} style={{
+                    background: bg, border: `2px solid ${border}`, borderRadius: 10, padding: "14px 16px", textAlign: "left",
+                    color: "#e2e8f0", fontSize: 15, cursor: showResults ? "default" : "pointer", display: "flex", alignItems: "center", gap: 12, transition: "all 0.15s"
+                  }}
+                    onMouseOver={e => { if (!showResults) { e.currentTarget.style.borderColor = "#3b82f6"; } }}
+                    onMouseOut={e => { if (!showResults && !selected) { e.currentTarget.style.borderColor = "#334155"; } }}>
+                    <span style={{
+                      width: 28, height: 28, borderRadius: "50%", border: `2px solid ${selected && !showResults ? "#60a5fa" : isCorrectOpt ? "#22c55e" : isWrongSel ? "#ef4444" : "#475569"}`,
+                      display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, fontWeight: 700, flexShrink: 0,
+                      background: isCorrectOpt ? "#22c55e" : isWrongSel ? "#ef4444" : selected && !showResults ? "#3b82f6" : "transparent",
+                      color: (selected && !showResults) || isCorrectOpt || isWrongSel ? "#fff" : "#94a3b8"
+                    }}>
+                      {String.fromCharCode(65 + oi)}
+                    </span>
+                    {opt}
+                    {isCorrectOpt && <span style={{ marginLeft: "auto", fontSize: 14 }}>✓</span>}
+                    {isWrongSel && <span style={{ marginLeft: "auto", fontSize: 14 }}>✗</span>}
+                  </button>
+                );
+              })}
+            </div>
+            {/* Nav + flag */}
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: 20 }}>
+              <button disabled={currentQ === 0} onClick={() => setCurrentQ(p => p - 1)} style={{
+                background: "#334155", color: currentQ === 0 ? "#475569" : "#f1f5f9", border: "none", borderRadius: 8, padding: "10px 20px", fontSize: 13, fontWeight: 600, cursor: currentQ === 0 ? "default" : "pointer"
+              }}>← Previous</button>
+              {!showResults && (
+                <button onClick={() => toggleFlag(currentQ)} style={{
+                  background: flagged[currentQ] ? "#f59e0b" : "#334155", color: flagged[currentQ] ? "#0f172a" : "#94a3b8",
+                  border: "none", borderRadius: 8, padding: "10px 16px", fontSize: 13, cursor: "pointer"
+                }}>
+                  {flagged[currentQ] ? "🚩 Flagged" : "Flag for Review"}
+                </button>
+              )}
+              <button disabled={currentQ === questions.length - 1} onClick={() => setCurrentQ(p => p + 1)} style={{
+                background: "#334155", color: currentQ === questions.length - 1 ? "#475569" : "#f1f5f9", border: "none", borderRadius: 8, padding: "10px 20px", fontSize: 13, fontWeight: 600, cursor: currentQ === questions.length - 1 ? "default" : "pointer"
+              }}>Next →</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
